@@ -2,7 +2,7 @@
 
 // Función para manejar la solicitud de agregar estudiantes
 document.getElementById("form-add-students").addEventListener("submit", function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario (recarga de la página)
 
     // Obtener el contenido del textarea
     let studentsJson = document.getElementById("add-students").value;
@@ -11,15 +11,15 @@ document.getElementById("form-add-students").addEventListener("submit", function
         // Parsear JSON
         let studentsData = JSON.parse(studentsJson);
 
-        // Hacer la solicitud POST
+        // Realizar una solicitud HTTP POST a la URL '/add_students/' para agregar los estudiantes
         fetch('/add_students/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(studentsData)
+            body: JSON.stringify(studentsData) // Convertir el objeto de estudiantes de vuelta a JSON para enviarlo al servidor
         })
-        .then(response => response.json())
+        .then(response => response.json()) // Parsear la respuesta de la API a formato JSON
         .then(data => {
             console.log('Success:', data);
             if (data.status === 'OK') {
@@ -136,9 +136,9 @@ document.getElementById("form-send-answers").addEventListener("submit", function
     try {
         // Parsear JSON
         let answersData = JSON.parse(answersJson);
-
+        // Obtener el ID de la prueba desde el input
         let test_id = document.getElementById("test_id_1").value;
-
+        // Validar que el ID de la prueba no esté vacío
         if (test_id == '') {
             alert('Debe ingresar un ID de prueba');
             return;
@@ -176,13 +176,10 @@ document.getElementById("form-send-answers").addEventListener("submit", function
 document.getElementById("form-get-results").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    // Obtener el contenido del textarea
-    let resultsJson = document.getElementById("get-results").value;
-
     try {
-
+        // Obtener el ID de la prueba desde el input
         let test_id = document.getElementById("test_id_2").value;
-
+        // Validar que el ID de la prueba no esté vacío
         if (test_id == '') {
             alert('Debe ingresar un ID de prueba');
             return;
@@ -225,9 +222,10 @@ function loadStudents() {
     })
     .then(response => response.json())
     .then(data => {
+        // Obtener el cuerpo de la tabla
         let tableBody = document.getElementById("students-table-body");
         tableBody.innerHTML = ''; // Limpiar la tabla
-
+        // Recorrer la lista de estudiantes y agregar una fila por cada uno
         data.students.forEach(student => {
             let row = `<tr>
                 <th scope="row">${student.id}</th>
@@ -252,9 +250,10 @@ function loadTests() {
     })
     .then(response => response.json())
     .then(data => {
+        // Obtener el cuerpo de la tabla
         let tableBody = document.getElementById("tests-table-body");
         tableBody.innerHTML = ''; // Limpiar la tabla
-
+        // Recorrer la lista de pruebas y agregar una fila por cada una
         data.tests.forEach(tests => {
             let row = `<tr>
                 <th scope="row">${tests.id}</th>

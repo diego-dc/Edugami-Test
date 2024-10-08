@@ -190,19 +190,23 @@ def CreateTest(request):
             data = json.loads(request.body)
 
             # Verificamos que la información necesaria esté presente
-            if "name" not in data or "questions" not in data:
-                return JsonResponse({"message": "Formato incorrecto: falta 'name' o 'questions'"}, status=400)
+            if "id" not in data or "name" not in data or "questions" not in data:
+                return JsonResponse({"message": "Formato incorrecto: faltan datos para crear la prueba"}, status=400)
+            
+            # Verificamos que el test no exista
+            if Test.objects.filter(id=data['id']).exists():
+                return JsonResponse({"status": "Error", "message": "[!] Test con ese id ya existe"}, status=400)
 
             # Creamos el objeto Test
-            test = Test.objects.create(name=data['name'])
+            test = Test.objects.create(id=data['id'], name=data['name'])
 
             # Iteramos sobre las preguntas
             for question_data in data['questions']:
                 question = Question.objects.create(
                     statement=question_data['statement'],
                     explanation=question_data.get('explanation', ''),
-                    score=question_data.get('score', 10), #  Si no trae score se asigna 10 por defecto
-                    tagType=question_data.get('axisType', 'Numeros')  # Si no trae tagType se asigna 'Numeros' por defecto, probablemente no tiene mucho sentido en la realidad, pero para dejar algo.
+                    score=question_data.get('score', 1), #  Si no trae score se asigna 1 por defecto
+                    tagType=question_data.get('axisType', 'Numeros')  # Si no trae tagType se asigna 'Numeros' por defecto, probablemente no tiene mucho sentido en la realidad, pero para dejar algo. Se podría crear tambien algo como "no especificado" o "sin tag".
                 )
 
                 # si no vienen alternativas, retornamos un error
@@ -213,7 +217,7 @@ def CreateTest(request):
                 if len(question_data['alternatives']) > 5:
                     return JsonResponse({"status": "Error", "message": "[!] Solo se permiten 5 alternativas por pregunta"}, status=400)
 
-                # Iteramos sobre las alternativas de cada pregunta (Asumimos que vendran las alternativas en formato correcto en el JSON)
+                # Iteramos sobre las alternativas de cada pregunta (Asumimos que vendran las alternativas en formato correcto en el JSON y una será correcta)
                 for alternative_data in question_data['alternatives']:
                     alternative = Alternative.objects.create(
                         content=alternative_data['content'],
@@ -406,7 +410,7 @@ def SendOrGetAnswers(request, test_id):
             else:
                 return JsonResponse({
                     "status": "Error",
-                    "message": "[!] Algunos estudiantes no pudieron ser procesados.",
+                    "message": "[!] Estudiante no existe.",
                     "success": success_ids,
                     "error": error_ids
                 }, status=400)
