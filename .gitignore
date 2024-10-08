@@ -109,6 +109,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+edugami_venv/
+.edugami_venv
 
 # Spyder project settings
 .spyderproject
