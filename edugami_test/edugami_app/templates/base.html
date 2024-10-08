@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+
+  <head>
+
+    <title>{% block title %}Edugami Test Page{% endblock %}</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- STYLES-->
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- DATATABLES styles-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+    
+    
+    {% load static %}
+
+    <!-- Global CSS file -->
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    {% block headercss %} {% endblock %}
+    {% block sidebarcss %} {% endblock %}
+
+    {% block extracss %} {% endblock %}
+
+  </head>
+  <body>
+
+    {% block header %} {% endblock %}
+
+    {% block sidebar %} {% endblock %}
+
+    <!-- Content de la página -->
+
+    {% block body %} {% endblock %}
+
+    <!-- Optional JavaScript -->
+     
+    <!-- jQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+
+
+    <!-- Imports JavaScript -->
+    {% block jsfiles_sidebar %} {% endblock %}
+    {% block jsfiles %} {% endblock %}
+  </body>
+
+</html>

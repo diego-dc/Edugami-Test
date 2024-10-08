@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tiltte %}Edugami Test IndexPage{% endblock %}
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+{% block body %}
+<section class="intro p-5">
+    <div class="h-100">
+        <div class="mask d-flex align-items-center h-100">
+            <div class="container-fluid">
+                <!-- Title -->
+                <div class="row justify-content-center align-items-center mb-5">
+                    <div class="col-12">
+                    <h1 class="text-center fw-bolder">Edugami Test App</h1>
+                </div>
+                
+                <div class="row ">
+                    <!-- Add Students Form -->
+                    <div class="col-6">
+                        <p class="mb-3 text-center fs-4">Formularios Para Pruebas</p>
+                        <form id="form-add-students">
+                            <!-- Message input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="add-students">Añadir Estudiantes JSON</label>
+                                <textarea class="form-control" id="add-students" rows="4"></textarea>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary-edugami mb-4">Añadir Estudiante(s)</button>
+                        </form>
+                        <hr>
+                        <form id="form-create-test">
+                            <!-- Message input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="create-test">Crear Prueba</label>
+                                <textarea class="form-control" id="create-test" rows="4"></textarea>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary-edugami mb-4">POST</button>
+                        </form>
+                        <form id="form-add-test-student">
+                            <!-- Test ID input -->
+                            <div data-mdb-input-init class="form-outline mb-4 col-3">
+                                <label class="form-label" for="test_id_0">Prueba ID</label>
+                                <input type="number" id="test_id_0" class="form-control" placeholder="Ingrese el ID de la prueba que se vinculará a los estudiantes.">
+                            </div>
+                            <!-- Message input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="add-test-student">Añadir Prueba a Estudiante</label>
+                                <textarea class="form-control" id="add-test-student" rows="4"></textarea>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary-edugami mb-4">POST</button>
+                        </form>
+                        <form id="form-send-answers">
+                            <!-- Test ID input -->
+                            <div data-mdb-input-init class="form-outline mb-4 col-3">
+                                <label class="form-label" for="test_id_1">Prueba ID</label>
+                                <input type="number" id="test_id_1" class="form-control" placeholder="Ingrese el ID de la prueba que responió el estudiante.">
+                            </div>
+                        
+                            <!-- Message input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="send-answers">Enviar Respuestas Estudiante</label>
+                                <textarea class="form-control" id="send-answers" rows="4"></textarea>
+                            </div>
+                        
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary-edugami mb-4">POST</button>
+                        </form>
+                        <form id="form-get-results">
+                            <!-- Test ID input -->
+                            <div data-mdb-input-init class="form-outline mb-4 col-3">
+                                <label class="form-label" for="test_id_2">Prueba ID</label>
+                                <input type="number" id="test_id_2" class="form-control" placeholder="Ingrese el ID de la prueba que desea obtener resultados.">
+                            </div>
+                            <!-- Message input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label" for="get-results">Obtener Resultados Prueba</label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button data-mdb-ripple-init type="submit" class="btn btn-primary-edugami mb-4">GET</button>
+                        </form>
+                    </div>
+                    <div class="col-6 justify-content-center">
+                        <!-- Students Table -->
+                        <p class="mb-3 text-center fs-4">Estudiante Actuales</p>
+                        <div class="card shadow-sm mb-5" style="background-color: #f9f9fe;">
+                            <div class="card-body">
+                                <div class="table-responsive rounded ">
+                                    <table class="table table-hover mb-0" id="students-table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">NAME</th>
+                                        <th scope="col">RUT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="students-table-body">
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tests Table -->
+                        <p class="mb-3 text-center fs-4">Pruebas Actuales</p>
+                        <div class="card shadow-sm mb-5" style="background-color: #f9f9fe;">
+                            <div class="card-body">
+                                <div class="table-responsive rounded ">
+                                    <table class="table table-hover mb-0" id="tests-table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">NAME</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tests-table-body">
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-3 text-center fs-4">Resultados HTTPS</p>
+                        <div class="card shadow-sm" style="background-color: #f9f9fe;">
+                            <div class="card-body h-20">
+                                <div id="https-responses">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block jsfiles %}
+    <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
